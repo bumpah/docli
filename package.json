@@ -1,0 +1,19 @@
+{
+  "name": "docli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.9.2",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "build": "tsc && node ./to-bin-file.js"
+  },
+  "bin": {
+    "docli": "./dist/index.js"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0"
+  }
+}
