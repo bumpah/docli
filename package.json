@@ -8,7 +8,9 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "build": "tsc && node ./to-bin-file.js"
+    "build": "tsc && node ./to-bin-file.js",
+    "watch": "tsc -w",
+    "node-app": "node ./to-bin-file.js"
   },
   "bin": {
     "docli": "./dist/index.js"
