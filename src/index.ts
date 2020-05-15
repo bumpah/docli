@@ -49,8 +49,14 @@ const commands = {
     run(`docker stop $(docker ps -q)`)
   },
   res: (args: string) => {
-    console.log(chalk`{yellow Restarting all running containers...}`)
-    run(`docker restart $(docker ps -q)`)
+    if (args) {
+      console.log(chalk`{yellow Restarting containers {green ${args}}...}`)
+      run(`docker restart ${args}`)
+    }
+    else {
+      console.log(chalk`{yellow Restarting all running containers...}`)
+      run(`docker restart $(docker ps -q)`)
+    }
   },
   b: (args: string) => {
     const [_, ...services] = args.split(' ')
@@ -66,14 +72,19 @@ const main = () => {
   console.log(info())
   for (let cmd of buildCommands()) {
     try {
-      if (cmd.startsWith('b ')) commands.b(cmd)
-      else commands[cmd]('')
+      launch(cmd)
     } catch (error) {
       console.error(chalk`{red Error: tried to run "${cmd}"}`)
       console.error(chalk`{yellow Commands: ${Object.keys(commands).join(', ')}}`)
       console.error(chalk`{red Message: ${error.message}}`)
     }
   }
+}
+
+const launch = (cmd: Keys) => {
+  let c = <Keys>cmd.split(' ')[0]
+  let [, ...a]: string[] = cmd.split(' ')
+  commands[c](a.join(' '))
 }
 
 const buildCommands = (): Keys[] => {
